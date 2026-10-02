@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>亀井さんとバーベキュー ｜ 2026.10.12</title>
+<meta name="description" content="2026年10月12日 トラウトファーム秋川BBQのしおり">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍖</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Zen+Maru+Gothic:wght@500;700;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root{
+    --river:#22a39a; --river-d:#14807a; --sky:#57b9d9;
+    --ember:#ff8a3d; --ember-d:#e86a1d; --momiji:#e4553f; --momiji-d:#c63f2b;
+    --kokuto:#8a5228; --gold:#ffc94a; --moss:#5aa45a; --moss-d:#3f8a44;
+    --ink:#3b3346; --sub:#8d8597; --cream:#fffaf3; --line:#f0e8dc;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; height:100%; }
+  body{ font-family:'Zen Maru Gothic',sans-serif; color:var(--ink); background:#2c7f86; -webkit-font-smoothing:antialiased; overflow:hidden; }
+  a{ color:inherit; }
+  :focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+
+  #home{ position:relative; height:100dvh; width:100vw; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    max-width:520px; margin:0 auto; background:var(--cream); box-shadow:0 0 60px rgba(10,60,60,.35); }
+  #home::before{ content:''; position:fixed; inset:0; max-width:520px; left:50%; transform:translateX(-50%); z-index:0; pointer-events:none;
+    background-image:radial-gradient(circle, rgba(228,85,63,.09) 1.4px, transparent 2px); background-size:22px 22px; }
+
+  /* ---------- HERO ---------- */
+  .hero{ position:relative; z-index:1; padding:calc(20px + env(safe-area-inset-top)) 20px 78px; text-align:center; color:#fff; overflow:hidden;
+    background:linear-gradient(170deg, var(--sky) 0%, #f2a35e 78%, var(--ember) 110%); border-radius:0 0 32px 32px; }
+  .hero .mtn{ position:absolute; left:0; right:0; bottom:0; width:100%; height:120px; z-index:0; }
+  .hero > *:not(.mtn){ position:relative; z-index:2; }
+  .mascot-hero{ width:150px; filter:drop-shadow(0 6px 8px rgba(90,40,10,.3)); margin-bottom:-4px; }
+  .ribbon{ display:inline-block; font-family:'Mochiy Pop One',sans-serif; font-size:11px; letter-spacing:.12em; background:#fff; color:var(--momiji); padding:5px 16px; border-radius:999px; box-shadow:0 3px 0 rgba(120,50,20,.18); }
+  .hero h1{ font-family:'Mochiy Pop One',sans-serif; font-weight:400; font-size:30px; line-height:1.38; margin:12px 0 4px; text-shadow:0 3px 0 rgba(150,60,20,.42); }
+  .hero .date{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; letter-spacing:.06em; }
+  .hero .stats{ display:flex; justify-content:center; gap:7px; margin-top:14px; flex-wrap:wrap; }
+  .hero .stat{ background:#fff; color:var(--river-d); font-weight:700; font-size:11.5px; padding:6px 12px; border-radius:999px; box-shadow:0 3px 0 rgba(20,90,90,.18); }
+
+  .hero .wx{ display:inline-block; margin-top:12px; font-size:12px; font-weight:900; color:#fff; text-decoration:none; padding:6px 14px; border-radius:999px; background:rgba(255,255,255,.22); border:2px solid rgba(255,255,255,.7); }
+  .alert{ position:relative; z-index:1; display:flex; gap:12px; align-items:center; margin:18px 18px 0; padding:13px 15px; border-radius:18px;
+    background:#fff3e6; border:2.5px solid #ffd2a8; text-decoration:none; color:var(--ink); }
+  .alert .ai{ font-size:22px; }
+  .alert b{ display:block; font-size:14px; color:var(--ember-d); }
+  .alert span{ font-size:12px; color:var(--sub); }
+  .alert .call{ margin-left:auto; flex:0 0 auto; font-family:'Mochiy Pop One',sans-serif; font-size:11.5px; color:#fff; background:var(--ember); padding:8px 12px; border-radius:999px; box-shadow:0 3px 0 var(--ember-d); }
+
+  .sect{ position:relative; z-index:1; padding:22px 18px 2px; }
+  .sect-t{ font-family:'Mochiy Pop One',sans-serif; font-size:14px; color:var(--momiji); display:flex; align-items:center; gap:8px; margin:0 4px 12px; }
+  .sect-t .cb{ width:20px; height:20px; }
+
+  /* map */
+  .mapwrap{ position:relative; border:2.5px solid #fff; border-radius:22px; overflow:hidden; box-shadow:0 5px 0 #cfe9e6, 0 10px 18px -12px rgba(20,90,90,.5); background:#e6f1ef; }
+  #map{ height:270px; width:100%; }
+  .legend{ display:flex; flex-wrap:wrap; gap:6px 12px; padding:10px 12px; background:#fff; font-size:11.5px; font-weight:700; }
+  .legend i{ display:inline-block; width:18px; height:4px; border-radius:2px; vertical-align:middle; margin-right:5px; }
+  .maplinks{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; }
+  .pin{ width:30px; height:30px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:3px solid #fff; box-shadow:0 3px 6px rgba(0,0,0,.3); display:flex; align-items:center; justify-content:center; }
+  .pin span{ transform:rotate(45deg); font-size:13px; line-height:1; }
+  .leaflet-popup-content{ font-family:'Zen Maru Gothic',sans-serif; font-size:13px; font-weight:700; margin:10px 14px; }
+
+  .btn{ position:relative; z-index:1; display:grid; grid-template-columns:58px 1fr 20px; align-items:center; gap:12px; width:100%; text-align:left; border:2.5px solid #fff; cursor:pointer; margin-bottom:11px; background:#fff; border-radius:20px; padding:11px 14px; box-shadow:0 5px 0 var(--sh), 0 10px 18px -12px rgba(120,60,30,.45); transition:transform .12s, box-shadow .12s; font-family:inherit; color:var(--ink); }
+  .btn:active{ transform:translateY(4px); box-shadow:0 1px 0 var(--sh); }
+  .btn .tp{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:15px; color:#fff; background:var(--c); border-radius:13px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow:inset 0 -3px 0 rgba(0,0,0,.14); }
+  .btn .bt{ display:block; font-weight:700; font-size:15.5px; line-height:1.3; }
+  .btn .bs{ display:block; font-size:11.5px; color:var(--sub); margin-top:2px; }
+  .btn .ar{ color:var(--c); font-size:18px; font-weight:900; }
+
+  .utils{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; padding:6px 18px 26px; position:relative; z-index:1; }
+  .util{ border:2.5px solid #fff; cursor:pointer; font-family:inherit; background:#fff; border-radius:20px; padding:15px 6px 12px; text-align:center; box-shadow:0 5px 0 var(--sh), 0 10px 18px -12px rgba(120,60,30,.45); transition:transform .12s, box-shadow .12s; color:var(--ink); }
+  .util:active{ transform:translateY(4px); box-shadow:0 1px 0 var(--sh); }
+  .util .ic{ font-size:22px; line-height:1; }
+  .util .ut{ font-family:'Mochiy Pop One',sans-serif; font-size:12.5px; margin-top:7px; color:var(--c); }
+  .foot{ position:relative; z-index:1; text-align:center; font-size:10.5px; color:var(--sub); padding:0 20px calc(26px + env(safe-area-inset-bottom)); line-height:1.7; }
+
+  /* ---------- DETAIL ---------- */
+  #overlay{ position:fixed; inset:0; z-index:1000; max-width:520px; margin:0 auto; background:var(--cream); display:none; flex-direction:column; }
+  #overlay.open{ display:flex; animation:slide .26s cubic-bezier(.4,0,.2,1); }
+  @keyframes slide{ from{ transform:translateX(100%);} to{ transform:none; } }
+  @media (prefers-reduced-motion:reduce){ #overlay.open{ animation:none; } }
+  .bar{ flex:0 0 auto; display:flex; align-items:center; gap:12px; padding:calc(12px + env(safe-area-inset-top)) 16px 12px; background:var(--c,var(--river)); color:#fff; box-shadow:0 4px 14px -6px rgba(0,0,0,.4); }
+  .back{ border:none; background:rgba(255,255,255,.28); color:#fff; width:38px; height:38px; border-radius:50%; font-size:18px; cursor:pointer; font-weight:900; flex:0 0 auto; }
+  .bar .btitle{ font-family:'Mochiy Pop One',sans-serif; font-size:16px; }
+  .bar .bnum{ margin-left:auto; font-family:'Fredoka',sans-serif; font-weight:700; opacity:.9; font-size:14px; }
+  .scroll{ flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+
+  .dhero{ position:relative; height:190px; background:linear-gradient(160deg, var(--c), color-mix(in srgb, var(--c) 55%, #3a2214)); display:flex; align-items:flex-end; justify-content:center; overflow:hidden; }
+  .dhero::after{ content:''; position:absolute; left:-6%; right:-6%; bottom:-4px; height:26px; background:var(--cream); border-radius:50% 50% 0 0/100% 100% 0 0; }
+  .dhero .band{ position:absolute; inset:0; background:repeating-linear-gradient(-25deg, rgba(255,255,255,.12) 0 14px, transparent 14px 40px); }
+  .dhero .mascot{ width:132px; position:relative; z-index:1; margin-bottom:8px; filter:drop-shadow(0 5px 7px rgba(0,0,0,.22)); }
+  .dhero .time{ position:absolute; left:18px; bottom:20px; z-index:2; font-family:'Fredoka',sans-serif; font-weight:700; font-size:30px; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.4); }
+  .dhero .emo{ position:absolute; right:18px; top:16px; font-size:34px; z-index:2; }
+  .dbody{ padding:22px 20px calc(60px + env(safe-area-inset-bottom)); }
+  .dbody h2{ font-family:'Mochiy Pop One',sans-serif; font-weight:400; font-size:21px; line-height:1.42; margin:0 0 6px; }
+  .dbody h3{ font-family:'Mochiy Pop One',sans-serif; font-weight:400; font-size:15px; color:var(--c); margin:26px 0 10px; }
+  .dmeta{ font-size:12.5px; color:var(--sub); margin-bottom:16px; }
+  .dbody p{ font-size:15px; line-height:1.95; margin:0; color:#564d5e; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+  .tag{ font-size:12px; font-weight:700; padding:7px 13px; border-radius:999px; background:#f4efe8; color:var(--sub); }
+  .tag.ok{ background:#e6f4e6; color:var(--moss-d); }
+  .tag.warn{ background:#fff0e0; color:var(--ember-d); }
+  .tag.c{ background:color-mix(in srgb, var(--c) 16%, #fff); color:var(--c); }
+
+  .members{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .mem{ display:flex; align-items:center; gap:6px; background:#fff; border:2px solid var(--line); border-radius:999px; padding:6px 13px 6px 6px; font-weight:700; font-size:14px; }
+  .mem i{ width:26px; height:26px; border-radius:50%; background:var(--c); color:#fff; font-style:normal; font-size:12px; display:flex; align-items:center; justify-content:center; }
+
+  .acts{ display:grid; gap:9px; margin-top:20px; }
+  .act{ display:flex; align-items:center; gap:10px; padding:13px 15px; border-radius:16px; background:#fff; border:2.5px solid color-mix(in srgb, var(--c) 30%, #fff); box-shadow:0 4px 0 color-mix(in srgb, var(--c) 22%, #fff); text-decoration:none; font-weight:700; font-size:14.5px; color:var(--ink); }
+  .act:active{ transform:translateY(3px); box-shadow:0 1px 0 color-mix(in srgb, var(--c) 22%, #fff); }
+  .act .ai{ font-size:19px; }
+  .act small{ display:block; font-size:11.5px; color:var(--sub); font-weight:500; }
+  .act .go{ margin-left:auto; color:var(--c); font-weight:900; }
+  .act.mini{ padding:11px 12px; font-size:13px; justify-content:center; }
+  .act.dis{ opacity:.55; pointer-events:none; }
+
+  .must{ margin-top:18px; padding:16px; border-radius:18px; background:linear-gradient(135deg,#fff1dc,#ffe2c4); border:2.5px dashed var(--ember); display:flex; gap:12px; align-items:center; }
+  .must svg{ width:62px; flex:0 0 auto; }
+  .must b{ font-family:'Mochiy Pop One',sans-serif; font-weight:400; font-size:15px; color:var(--kokuto); display:block; margin-bottom:3px; }
+  .must span{ font-size:13px; line-height:1.6; color:#6a5545; }
+
+  .brow{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:13px 6px; border-bottom:2px dotted var(--line); font-size:14.5px; }
+  .brow small{ display:block; font-size:11.5px; color:var(--sub); }
+  .brow b{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:17px; white-space:nowrap; }
+  .btot{ margin-top:18px; padding:18px; border-radius:20px; background:linear-gradient(135deg,var(--river),var(--river-d)); color:#fff; box-shadow:0 6px 0 rgba(10,90,85,.3); text-align:center; }
+  .btot .l{ font-size:13px; font-weight:700; opacity:.92; }
+  .btot .big{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:44px; color:var(--gold); line-height:1.1; margin:4px 0 2px; }
+  .btot .big small{ font-size:18px; }
+  .btot .s{ font-size:12px; opacity:.9; }
+  .extra{ margin-top:12px; padding:13px 16px; border-radius:16px; background:#fff; border:2px dashed #e3d6c4; font-size:13.5px; display:flex; justify-content:space-between; gap:10px; }
+  .extra b{ color:var(--ember-d); white-space:nowrap; }
+  .note{ margin-top:16px; font-size:12px; color:var(--sub); line-height:1.75; }
+
+  .tbl{ width:100%; border-collapse:separate; border-spacing:0; font-size:14px; background:#fff; border-radius:16px; overflow:hidden; border:2px solid var(--line); }
+  .tbl td{ padding:12px 14px; border-bottom:2px dotted var(--line); }
+  .tbl tr:last-child td{ border-bottom:none; }
+  .tbl td:last-child{ text-align:right; font-family:'Fredoka',sans-serif; font-weight:700; font-size:16px; white-space:nowrap; }
+
+  .car{ background:#fff; border:2.5px solid var(--line); border-radius:20px; padding:16px; margin-bottom:14px; box-shadow:0 4px 0 var(--line); }
+  .car .ch{ display:flex; align-items:center; gap:10px; }
+  .car .ce{ font-size:28px; }
+  .car .cn{ font-family:'Mochiy Pop One',sans-serif; font-size:15px; color:var(--cc); }
+  .car .cm{ font-size:12px; color:var(--sub); margin-top:2px; }
+  .car .members .mem i{ background:var(--cc); }
+
+  .check{ display:flex; align-items:center; gap:13px; padding:14px 16px; background:#fff; border:2px solid var(--line); border-radius:16px; margin-bottom:10px; cursor:pointer; user-select:none; box-shadow:0 3px 0 var(--line); }
+  .check .box{ width:26px; height:26px; border-radius:9px; border:2.5px solid #dccfbf; background:#fdf9f3; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:900; color:#fff; flex:0 0 auto; }
+  .check .lbl{ font-size:15px; font-weight:700; }
+  .check .lbl small{ display:block; font-size:11.5px; color:var(--sub); font-weight:500; }
+  .check.on{ background:#f3fbf2; border-color:#b6dfb3; }
+  .check.on .box{ background:var(--moss); border-color:var(--moss); }
+  .check.on .box::after{ content:'✓'; }
+  .check.on .lbl{ color:#a7b8a5; text-decoration:line-through; }
+  .reset{ margin-top:6px; border:none; background:none; color:var(--sub); font-family:inherit; font-size:12px; text-decoration:underline; cursor:pointer; }
+
+  .nrow{ display:flex; gap:13px; padding:15px 4px; border-bottom:2px dotted var(--line); }
+  .nrow .ni{ font-size:22px; flex:0 0 auto; width:30px; text-align:center; }
+  .nrow b{ display:block; font-size:15px; margin-bottom:3px; }
+  .nrow span{ font-size:13.5px; line-height:1.75; color:#5d5466; }
+  .nrow.hot b{ color:var(--ember-d); }
+
+  .ul{ margin:0; padding:0; list-style:none; }
+  .ul li{ position:relative; padding:11px 4px 11px 26px; border-bottom:2px dotted var(--line); font-size:14.5px; font-weight:700; }
+  .ul li::before{ content:''; position:absolute; left:6px; top:18px; width:9px; height:9px; border-radius:50%; background:var(--c); }
+.map3d{ position:relative; margin-top:18px; border-radius:20px; overflow:hidden; border:2.5px solid #fff; box-shadow:0 5px 0 #cde2f5, 0 10px 18px -12px rgba(20,60,110,.5); background:#f3ead8; }
+  .map3d iframe{ display:block; width:100%; height:440px; border:0; }
+  .map3d .cap{ position:absolute; left:10px; bottom:10px; font-size:11px; font-weight:700; background:rgba(255,255,255,.9); padding:4px 10px; border-radius:99px; pointer-events:none; }
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+
+<!-- オリジナルマスコット：ネオ黒糖ロールくん -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<g id="roll">
+  <ellipse cx="100" cy="170" rx="62" ry="9" fill="rgba(70,30,10,.18)"/>
+  <!-- arms -->
+  <path d="M38 118 q-20 -6 -22 -24" stroke="#8a5228" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M162 118 q22 -4 24 -26" stroke="#8a5228" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- feet -->
+  <ellipse cx="78" cy="164" rx="12" ry="7" fill="#6d3d1c"/>
+  <ellipse cx="122" cy="164" rx="12" ry="7" fill="#6d3d1c"/>
+  <!-- body -->
+  <path d="M30 116 q0 -62 70 -62 q70 0 70 62 q0 44 -70 44 q-70 0 -70 -44z" fill="#a8652f"/>
+  <path d="M42 100 q10 -36 58 -38 q48 2 58 38 q-20 -22 -58 -22 q-38 0 -58 22z" fill="#c4834a" opacity=".85"/>
+  <!-- kokuto swirl -->
+  <path d="M46 132 q20 -30 54 -32 q30 0 36 22" stroke="#6b3818" stroke-width="7" fill="none" stroke-linecap="round" opacity=".55"/>
+  <path d="M60 148 q16 -22 42 -22 q22 2 26 18" stroke="#6b3818" stroke-width="6" fill="none" stroke-linecap="round" opacity=".45"/>
+  <!-- sugar sparkles -->
+  <circle cx="70" cy="74" r="2.5" fill="#fff4dc"/><circle cx="128" cy="72" r="2.5" fill="#fff4dc"/><circle cx="100" cy="64" r="2" fill="#fff4dc"/>
+  <!-- face -->
+  <ellipse cx="80" cy="108" rx="7" ry="9" fill="#2d1a10"/>
+  <ellipse cx="120" cy="108" rx="7" ry="9" fill="#2d1a10"/>
+  <circle cx="82.5" cy="104.5" r="2.8" fill="#fff"/><circle cx="122.5" cy="104.5" r="2.8" fill="#fff"/>
+  <ellipse cx="66" cy="122" rx="9" ry="6" fill="#ff8a7a" opacity=".8"/>
+  <ellipse cx="134" cy="122" rx="9" ry="6" fill="#ff8a7a" opacity=".8"/>
+  <path d="M90 120 q10 10 20 0" stroke="#2d1a10" stroke-width="3.5" fill="#e4553f" stroke-linecap="round"/>
+</g>
+<g id="grill">
+  <path d="M30 172 q20 -26 14 -46 q18 14 16 34 q10 -14 6 -28 q18 18 14 40z" fill="#ffb13d"/>
+  <path d="M134 172 q20 -26 14 -46 q18 14 16 34 q10 -14 6 -28 q18 18 14 40z" fill="#ffb13d"/>
+  <path d="M82 172 q14 -18 10 -32 q14 10 12 24 q8 -10 4 -20 q14 14 10 28z" fill="#ff7a2a"/>
+  <rect x="14" y="166" width="172" height="8" rx="4" fill="#4a4a52"/>
+  <g stroke="#4a4a52" stroke-width="3"><line x1="30" y1="166" x2="30" y2="182"/><line x1="70" y1="166" x2="70" y2="182"/><line x1="110" y1="166" x2="110" y2="182"/><line x1="150" y1="166" x2="150" y2="182"/></g>
+</g>
+</defs></svg>
+
+<!-- ================= HOME ================= -->
+<main id="home">
+  <header class="hero">
+    <svg class="mascot-hero" viewBox="0 0 200 190" role="img" aria-label="網の上のネオ黒糖ロールくん"><use href="#grill"/><use href="#roll" transform="translate(0,-8)"/></svg>
+    <div><span class="ribbon">★ AKIGAWA BBQ 2026 ★</span></div>
+    <h1>亀井さんと<br>バーベキュー♪</h1>
+    <div class="date">2026 . 10 . 12 &nbsp;MON・祝</div>
+    <div class="stats">
+      <span class="stat">檜原村・秋川渓谷</span>
+      <span class="stat">8:00-21:00</span>
+      <span class="stat">8名＋🐶</span>
+    </div>
+    <a class="wx" target="_blank" rel="noopener" href="https://www.google.com/search?q=%E6%AA%9C%E5%8E%9F%E6%9D%91+%E5%A4%A9%E6%B0%97">☀️ 檜原村の天気を見る ›</a>
+    <svg class="mtn" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 70 L50 34 L92 62 L150 18 L208 66 L262 30 L318 64 L360 40 L400 58 V120 H0z" fill="#3f8a44" opacity=".55"/>
+      <path d="M0 86 L60 56 L116 82 L176 48 L240 84 L300 58 L356 82 L400 70 V120 H0z" fill="#e4553f" opacity=".75"/>
+      <path d="M0 98 Q100 84 200 98 T400 96 V120 H0z" fill="#22a39a"/>
+      <path d="M30 104 q20 -6 40 0 M170 108 q20 -6 40 0 M300 104 q20 -6 40 0" stroke="#bff0ea" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+  </header>
+
+  <a class="alert" id="parkAlert" href="tel:0425980204">
+    <span class="ai">🅿️</span>
+    <span><b>駐車場は要予約（未予約）</b><span>祝日は満車になりやすいので早めに電話を</span></span>
+    <span class="call">電話する</span>
+  </a>
+
+  <section class="sect">
+    <h2 class="sect-t"><svg class="cb" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c4 0 7 3 7 7 0 5-7 13-7 13S5 14 5 9c0-4 3-7 7-7z" fill="var(--momiji)"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg>行程マップ</h2>
+    <div class="mapwrap">
+      <div id="map" role="img" aria-label="出発地からトラウトファーム秋川までの行程マップ"></div>
+      <div class="legend">
+        <span><i style="background:var(--ember)"></i>大久保組（VOXY）</span>
+        <span><i style="background:#3d8fd6"></i>溝の口組（レヴォーグ）</span>
+        <span>🛒 買い出し候補</span>
+      </div>
+    </div>
+    <div class="maplinks" style="--c:var(--river);">
+      <a class="act mini" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=%E5%A4%A7%E4%B9%85%E4%BF%9D%E9%A7%85&destination=%E3%83%88%E3%83%A9%E3%82%A6%E3%83%88%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E7%A7%8B%E5%B7%9D&waypoints=%E6%AD%A6%E8%94%B5%E4%BA%94%E6%97%A5%E5%B8%82%E9%A7%85&travelmode=driving">🚘 大久保から</a>
+      <a class="act mini" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=%E6%BA%9D%E3%81%AE%E5%8F%A3%E9%A7%85&destination=%E3%83%88%E3%83%A9%E3%82%A6%E3%83%88%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E7%A7%8B%E5%B7%9D&waypoints=%E6%AD%A6%E8%94%B5%E4%BA%94%E6%97%A5%E5%B8%82%E9%A7%85&travelmode=driving">🚙 溝の口から</a>
+    </div>
+    <p class="note" style="margin-top:8px;">地図の線はおおまかなイメージです。実際のルートはGoogleマップで確認してください。</p>
+  </section>
+
+  <section class="sect">
+    <h2 class="sect-t"><svg class="cb" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--ember)"/><path d="M12 6v6l4 2" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>きょうのスケジュール</h2>
+
+    <button class="btn" data-open="d1" style="--c:var(--ember); --sh:#ffd9bd;">
+      <span class="tp">08:00</span><span><span class="bt">大久保組 出発</span><span class="bs">VOXY・百人町ふれあい公園付近</span></span><span class="ar">›</span></button>
+    <button class="btn" data-open="d2" style="--c:#3d8fd6; --sh:#cde2f5;">
+      <span class="tp">08:40</span><span><span class="bt">溝の口組 ピックアップ</span><span class="bs">レヴォーグ・溝の口駅</span></span><span class="ar">›</span></button>
+    <button class="btn" data-open="d3" style="--c:var(--kokuto); --sh:#ead6c4;">
+      <span class="tp">10:30</span><span><span class="bt">合流・買い出し 🛒</span><span class="bs">いなげや五日市店・黒糖ロール3〜5袋！</span></span><span class="ar">›</span></button>
+    <button class="btn" data-open="d4" style="--c:var(--river); --sh:#c8ebe7;">
+      <span class="tp">12:00</span><span><span class="bt">トラウトファーム秋川 到着</span><span class="bs">受付 → BBQ・釣り・川遊び</span></span><span class="ar">›</span></button>
+    <button class="btn" data-open="d5" style="--c:var(--momiji); --sh:#f6d3cc;">
+      <span class="tp">16:00</span><span><span class="bt">撤収・出発</span><span class="bs">17:00閉場に合わせて片付け</span></span><span class="ar">›</span></button>
+    <button class="btn" data-open="d6" style="--c:#7a62c4; --sh:#ddd5f2;">
+      <span class="tp">21:00</span><span><span class="bt">レンタカー返却・解散</span><span class="bs">大久保駅前店</span></span><span class="ar">›</span></button>
+  </section>
+
+  <section class="sect" style="padding-bottom:2px;">
+    <h2 class="sect-t"><svg class="cb" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z" fill="var(--gold)"/></svg>じゅんび＆メモ</h2>
+  </section>
+  <div class="utils">
+    <button class="util" data-open="dcars" style="--c:var(--ember-d); --sh:#ffd9bd;"><div class="ic">🚘</div><div class="ut">車割り</div></button>
+    <button class="util" data-open="dshop" style="--c:var(--kokuto); --sh:#ead6c4;"><div class="ic">🛒</div><div class="ut">買い出し</div></button>
+    <button class="util" data-open="dcost" style="--c:var(--river-d); --sh:#c8ebe7;"><div class="ic">💰</div><div class="ut">費用</div></button>
+    <button class="util" data-open="dcheck" style="--c:var(--moss-d); --sh:#d3ead0;"><div class="ic">🎒</div><div class="ut">持ちもの</div></button>
+    <button class="util" data-open="dnote" style="--c:var(--momiji-d); --sh:#f6d3cc;"><div class="ic">⚠️</div><div class="ut">注意事項</div></button>
+    <button class="util" data-open="dinfo" style="--c:#3d8fd6; --sh:#cde2f5;"><div class="ic">☎️</div><div class="ut">施設情報</div></button>
+  </div>
+  <div class="foot">時間はめやすです ・ 安全運転でいきましょう 🍖</div>
+</main>
+
+<!-- ================= DETAIL ================= -->
+<div id="overlay" role="dialog" aria-modal="true" aria-labelledby="bartitle">
+  <div class="bar" id="bar">
+    <button class="back" id="back" aria-label="もどる">‹</button>
+    <span class="btitle" id="bartitle">詳細</span>
+    <span class="bnum" id="barnum"></span>
+  </div>
+  <div class="scroll" id="scroll">
+
+    <div class="detail hidden" data-id="d1" data-c="var(--ember)" data-title="大久保組 出発" data-num="08:00">
+      <div class="dhero"><div class="band"></div><span class="emo">🚐</span><svg class="mascot" viewBox="0 0 200 180"><use href="#roll"/></svg><div class="time">08:00</div></div>
+      <div class="dbody"><h2>大久保組 レンタカー出発</h2><div class="dmeta">新宿区立百人町ふれあい公園付近（大久保駅近く）</div>
+        <p>雄陽が大久保駅前店でVOXYを借りて、公園付近でみんなをピックアップ。10:30に<b>いなげや ina21 五日市店</b>で溝の口組と合流します。遅れそうなときは早めに連絡を。</p>
+        <div class="members"><span class="mem"><i>運</i>雄陽</span><span class="mem"><i>須</i>須田</span><span class="mem"><i>牧</i>牧野</span><span class="mem"><i>柏</i>柏原</span></div>
+        <div class="tags"><span class="tag c">VOXY（8人乗り）</span><span class="tag">運転・貸出手続き：雄陽</span></div>
+        <div class="acts">
+          <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E5%AE%BF%E5%8C%BA%E7%AB%8B%E7%99%BE%E4%BA%BA%E7%94%BA%E3%81%B5%E3%82%8C%E3%81%82%E3%81%84%E5%85%AC%E5%9C%92"><span class="ai">📍</span><span>集合場所をGoogleマップで開く</span><span class="go">›</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail hidden" data-id="d2" data-c="#3d8fd6" data-title="溝の口組" data-num="08:40">
+      <div class="dhero"><div class="band"></div><span class="emo">🚙</span><svg class="mascot" viewBox="0 0 200 180"><use href="#roll"/></svg><div class="time">08:40</div></div>
+      <div class="dbody"><h2>溝の口組 ピックアップ・出発</h2><div class="dmeta">溝の口駅</div>
+        <p>ジョーの車（レヴォーグ）で溝の口駅からみんなを乗せて出発。あいりさんの愛犬もいっしょです。10:30に<b>いなげや ina21 五日市店</b>で大久保組と合流します。</p>
+        <div class="members"><span class="mem"><i>運</i>ジョー</span><span class="mem"><i>亀</i>亀井さん</span><span class="mem"><i>赤</i>赤池</span><span class="mem"><i>あ</i>あいり</span><span class="mem"><i>🐶</i>愛犬</span></div>
+        <div class="tags"><span class="tag c">レヴォーグ（ジョー所有車）</span></div>
+        <div class="acts">
+          <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E6%BA%9D%E3%81%AE%E5%8F%A3%E9%A7%85"><span class="ai">📍</span><span>溝の口駅をGoogleマップで開く</span><span class="go">›</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail hidden" data-id="d3" data-c="var(--kokuto)" data-title="合流・買い出し" data-num="10:30">
+      <div class="dhero"><div class="band"></div><span class="emo">🛒</span><svg class="mascot" viewBox="0 0 200 180"><use href="#roll"/></svg><div class="time">10:30</div></div>
+      <div class="dbody"><h2>いなげや五日市店で合流・買い出し</h2><div class="dmeta">10:30〜11:30・いなげや ina21 五日市店（武蔵五日市駅近く）</div>
+        <p>2台ともここで合流して、みんなで一緒に買い出し。食材がダブらないように、肉・野菜・飲み物をまとめて調達します。先に着いた組は駐車場で待機を。氷は溶けにくいよう、現地手前のKaaBeeyaで買うのが◎。祝日なので営業時間は当日Googleマップで確認を。</p>
+        <div class="must">
+          <svg viewBox="0 0 200 180" aria-hidden="true"><use href="#roll"/></svg>
+          <span><b>マスト買い：ネオ黒糖ロール</b>3〜5袋が目標。網で炙って食べます！</span>
+        </div>
+        <div class="acts">
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=3709327251018917056"><span class="ai">🅰️</span><span>スーパーアルプス あきる野店<small>あきる野IC近く・9:30〜21:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=14430933872264467400"><span class="ai">🍺</span><span>業務スーパー リカーキング あきる野店<small>お酒・大容量の肉・9:00〜20:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=5591321849359981563"><span class="ai">🤝</span><span>いなげや ina21 五日市店（合流場所）<small>10:30集合・武蔵五日市駅近く・9:00〜20:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=13359242724749876371"><span class="ai">🧊</span><span>KaaBeeya（檜原村役場の隣）<small>最後の買い足し・氷はここで・9:00〜19:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=16042560211194507318"><span class="ai">🥬</span><span>山の店（檜原村）<small>地元野菜・地酒の直売所・10:00〜17:00</small></span><span class="go">›</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail hidden" data-id="d4" data-c="var(--river)" data-title="BBQスタート" data-num="12:00">
+      <div class="dhero"><div class="band"></div><span class="emo">🍖</span><svg class="mascot" viewBox="0 0 200 190"><use href="#grill"/><use href="#roll" transform="translate(0,-8)"/></svg><div class="time">12:00</div></div>
+      <div class="dbody"><h2>トラウトファーム秋川 到着・BBQ開始</h2><div class="dmeta">東京都西多摩郡檜原村樋里4426・営業 8:00〜17:00</div>
+        <p>到着したら受付へ。BBQは川原のスペースで。コンロなどの道具は現地でレンタルします。釣り堀でのヤマメ・ニジマス釣りや川遊びも楽しめます。</p>
+        <div class="tags"><span class="tag warn">支払いは現金のみ</span><span class="tag c">BBQは川原で</span><span class="tag">道具は現地レンタル</span></div>
+        <div class="acts">
+          <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=%E3%83%88%E3%83%A9%E3%82%A6%E3%83%88%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E7%A7%8B%E5%B7%9D&travelmode=driving"><span class="ai">🧭</span><span>ここへナビ開始</span><span class="go">›</span></a>
+          <a class="act" href="tel:0425980204"><span class="ai">📞</span><span>施設に電話する<small>042-598-0204</small></span><span class="go">›</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail hidden" data-id="d5" data-c="var(--momiji)" data-title="撤収" data-num="16:00">
+      <div class="dhero"><div class="band"></div><span class="emo">🍁</span><svg class="mascot" viewBox="0 0 200 180"><use href="#roll"/></svg><div class="time">16:00</div></div>
+      <div class="dbody"><h2>撤収・現地出発</h2><div class="dmeta">16:00〜16:30・営業終了は17:00</div>
+        <p>閉場時間に合わせて、みんなで片付け。レンタル品の返却と、ゴミの扱いは受付で確認を。10月の山あいは夕方から一気に冷えるので、上着を出しておくと安心です。</p>
+        <p style="margin-top:12px;">3連休の最終日なので、帰りは中央道上り（八王子→高井戸）が渋滞する可能性があります。返却時間に遅れそうなときは、雄陽がレンタカー店に連絡します。</p>
+        <div class="tags"><span class="tag warn">帰りは渋滞に注意</span><span class="tag warn">ゴミのルールは現地で確認</span><span class="tag c">レンタル品の返却</span></div>
+      </div>
+    </div>
+
+    <div class="detail hidden" data-id="d6" data-c="#7a62c4" data-title="返却・解散" data-num="21:00">
+      <div class="dhero"><div class="band"></div><span class="emo">🌙</span><svg class="mascot" viewBox="0 0 200 180"><use href="#roll"/></svg><div class="time">21:00</div></div>
+      <div class="dbody"><h2>レンタカー返却・解散</h2><div class="dmeta">大久保駅前店</div>
+        <p>VOXYを大久保駅前店に返却して解散。運転おつかれさまでした！費用は後日、雄陽がまとめて精算します。</p>
+        <div class="tags"><span class="tag c">返却予定 21:00</span></div>
+      </div>
+    </div>
+
+    <!-- 車割り -->
+    <div class="detail hidden" data-id="dcars" data-c="var(--ember-d)" data-title="車割り" data-num="CARS">
+      <div class="dbody" style="padding-top:24px;">
+        <div class="car" style="--cc:var(--ember-d);">
+          <div class="ch"><span class="ce">🚐</span><div><div class="cn">大久保組｜VOXY</div><div class="cm">レンタカー・8人乗り／8:00 新宿区立百人町ふれあい公園付近<br>10:30 いなげや ina21 五日市店で合流</div></div></div>
+          <div class="members"><span class="mem"><i>運</i>雄陽</span><span class="mem"><i>須</i>須田</span><span class="mem"><i>牧</i>牧野</span><span class="mem"><i>柏</i>柏原</span></div>
+          <p class="note" style="margin-top:12px;">返却予定 21:00（大久保駅前店）</p>
+        </div>
+        <div class="car" style="--cc:#3d8fd6;">
+          <div class="ch"><span class="ce">🚙</span><div><div class="cn">溝の口組｜レヴォーグ</div><div class="cm">ジョー所有車／8:40 溝の口駅<br>10:30 いなげや ina21 五日市店で合流</div></div></div>
+          <div class="members"><span class="mem"><i>運</i>ジョー</span><span class="mem"><i>亀</i>亀井さん</span><span class="mem"><i>赤</i>赤池</span><span class="mem"><i>あ</i>あいり</span><span class="mem"><i>🐶</i>愛犬</span></div>
+        </div>
+        <h3>駐車場代（トラウトファーム秋川）</h3>
+        <table class="tbl"><tr><td>普通車</td><td>¥1,200</td></tr><tr><td>二輪車</td><td>¥400</td></tr></table>
+      </div>
+    </div>
+
+    <!-- 買い出し -->
+    <div class="detail hidden" data-id="dshop" data-c="var(--kokuto)" data-title="買い出しメモ" data-num="SHOP">
+      <div class="dbody" style="padding-top:24px;">
+        <div class="must" style="margin-top:0;">
+          <svg viewBox="0 0 200 180" aria-hidden="true"><use href="#roll"/></svg>
+          <span><b>ネオ黒糖ロール 3〜5袋</b>網で炙って食べる用。今日の主役です。</span>
+        </div>
+        <h3>食材・ドリンク</h3>
+        <ul class="ul">
+          <li>肉・野菜・ウインナー・焼きそばなど</li>
+          <li>お茶・ジュース・お酒</li>
+          <li>氷</li>
+        </ul>
+        <h3>買い出しスポット（ルート順）</h3>
+        <div class="acts" style="margin-top:0;">
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=3709327251018917056"><span class="ai">🅰️</span><span>スーパーアルプス あきる野店<small>あきる野IC近く・9:30〜21:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=14430933872264467400"><span class="ai">🍺</span><span>業務スーパー リカーキング あきる野店<small>お酒・大容量の肉・9:00〜20:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=5591321849359981563"><span class="ai">🤝</span><span>いなげや ina21 五日市店（合流場所）<small>10:30集合・武蔵五日市駅近く・9:00〜20:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=13359242724749876371"><span class="ai">🧊</span><span>KaaBeeya（檜原村役場の隣）<small>最後の買い足し・氷はここで・9:00〜19:00</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://maps.google.com/maps?cid=16042560211194507318"><span class="ai">🥬</span><span>山の店（檜原村）<small>地元野菜・地酒の直売所・10:00〜17:00</small></span><span class="go">›</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 費用 -->
+    <div class="detail hidden" data-id="dcost" data-c="var(--river-d)" data-title="費用のめやす" data-num="COST">
+      <div class="dbody" style="padding-top:24px;">
+        <div class="brow"><span>レンタカー（VOXY）<small>1日</small></span><b>約¥20,000</b></div>
+        <div class="brow"><span>ガソリン代<small>2台・往復</small></span><b>約¥3,500</b></div>
+        <div class="brow"><span>高速代<small>2台・往復</small></span><b>約¥6,000</b></div>
+        <div class="brow"><span>駐車場<small>¥1,200 × 2台</small></span><b>¥2,400</b></div>
+        <div class="brow"><span>管理費<small>大人 ¥500 × 8人</small></span><b>¥4,000</b></div>
+        <div class="brow"><span>食材・飲み物<small>¥1,500 × 8人</small></span><b>¥12,000</b></div>
+        <div class="btot">
+          <div class="l">合計 約¥47,900 ÷ 8人</div>
+          <div class="big">約6,000<small>円</small></div>
+          <div class="s">1人あたり（概算）</div>
+        </div>
+        <div class="extra"><span>BBQ道具のレンタル代</span><b>別途・現地精算</b></div>
+        <h3>現地の利用料金</h3>
+        <table class="tbl">
+          <tr><td>大人（高校生以上）</td><td>¥500／人</td></tr>
+          <tr><td>子ども（3歳〜中学生）</td><td>¥250／人</td></tr>
+        </table>
+        <p class="note">※金額は概算です。レンタカー代・燃料代・食材費・管理費などは、後日雄陽が集計して一括精算します。<br>※現地での支払いは<b>現金のみ</b>（キャッシュレス不可）。</p>
+      </div>
+    </div>
+
+    <!-- 持ちもの -->
+    <div class="detail hidden" data-id="dcheck" data-c="var(--moss-d)" data-title="持ちものリスト" data-num="CHECK">
+      <div class="dbody" style="padding-top:22px;" id="checklist">
+        <p class="note" style="margin:0 0 16px;">タップでチェック。閉じても保存されます ✓</p>
+        <div class="check" data-k="cash"><div class="box"></div><span class="lbl">現金（多め）<small>現地は現金のみ＋精算用</small></span></div>
+        <div class="check" data-k="shoes"><div class="box"></div><span class="lbl">濡れてもいい靴<small>川遊び・釣りをする人</small></span></div>
+        <div class="check" data-k="clothes"><div class="box"></div><span class="lbl">着替え</span></div>
+        <div class="check" data-k="towel"><div class="box"></div><span class="lbl">タオル</span></div>
+        <div class="check" data-k="jacket"><div class="box"></div><span class="lbl">上着・防寒着<small>山あいの夕方は冷えます</small></span></div>
+        <div class="check" data-k="trash"><div class="box"></div><span class="lbl">ゴミ袋</span></div>
+        <div class="check" data-k="phone"><div class="box"></div><span class="lbl">スマホ＆モバイルバッテリー</span></div>
+        <button class="reset" id="resetCheck">チェックをすべて外す</button>
+      </div>
+    </div>
+
+    <!-- 注意事項 -->
+    <div class="detail hidden" data-id="dnote" data-c="var(--momiji-d)" data-title="注意事項" data-num="NOTE">
+      <div class="dbody" style="padding-top:14px;">
+        <div class="nrow hot"><span class="ni">🅿️</span><div><b>駐車場は要予約</b><span>駐車場は約10台。祝日は満車になりやすいため、電話（042-598-0204）で予約を。</span></div></div>
+        <div class="nrow hot"><span class="ni">💴</span><div><b>現金を用意</b><span>現地決済は現金のみ。立替え分の精算用にも多めに準備を。</span></div></div>
+        <div class="nrow"><span class="ni">🚗</span><div><b>帰りの渋滞</b><span>3連休最終日のため、夕方の中央道上りは混みやすいです。返却に遅れそうなら雄陽がレンタカー店に連絡。</span></div></div>
+        <div class="nrow"><span class="ni">👟</span><div><b>服装・シューズ</b><span>川遊びや釣りをする人は、濡れてもいい靴と着替えを持参。</span></div></div>
+        <div class="nrow"><span class="ni">☔</span><div><b>天候</b><span>雨のときはレンタルタープが使えます。<a href="https://www.google.com/search?q=%E6%AA%9C%E5%8E%9F%E6%9D%91+%E5%A4%A9%E6%B0%97" target="_blank" rel="noopener" style="color:var(--river-d);font-weight:700;">檜原村の天気予報 ›</a></span></div></div>
+        <div class="nrow"><span class="ni">🐒</span><div><b>野生動物に注意</b><span>鳥やサル、熊などの目撃情報があります（村内放送で案内）。食べ物の出しっぱなしに気をつけて。</span></div></div>
+        <div class="nrow"><span class="ni">🚬</span><div><b>喫煙</b><span>喫煙スペースあり。</span></div></div>
+        <div class="nrow"><span class="ni">🐶</span><div><b>ペット</b><span>同伴OK。あいりさんの愛犬が参加予定です。ペットの料金は、駐車場の予約電話のときに確認を。</span></div></div>
+      </div>
+    </div>
+
+    <!-- 施設情報 -->
+    <div class="detail hidden" data-id="dinfo" data-c="#3d8fd6" data-title="施設情報" data-num="INFO">
+      <div class="dbody" style="padding-top:24px;">
+        <h2>トラウトファーム秋川</h2>
+        <div class="dmeta">東京都西多摩郡檜原村樋里4426</div>
+        <table class="tbl">
+          <tr><td>営業時間</td><td>8:00〜17:00</td></tr>
+          <tr><td>電話</td><td>042-598-0204</td></tr>
+          <tr><td>駐車場</td><td>約10台</td></tr>
+        </table>
+        <h3>🏔️ 場内3Dマップ</h3>
+        <div class="map3d"><iframe id="map3dFrame" title="トラウトファーム秋川 場内3Dマップ"></iframe></div>
+        <p class="note" style="margin-top:8px;">ドラッグで回転・ピンチで拡大。アイコンをタップすると説明が出ます。</p>
+        <div class="acts">
+          <a class="act" href="tel:0425980204"><span class="ai">📞</span><span>電話する<small>駐車場の予約・当日の連絡に</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A9%E3%82%A6%E3%83%88%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E7%A7%8B%E5%B7%9D"><span class="ai">🗺️</span><span>Googleマップで開く</span><span class="go">›</span></a>
+          <a class="act" id="map3d" target="_blank" rel="noopener" href="#"><span class="ai">🏔️</span><span>3Dマップを全画面で開く<small id="map3dSub">準備中</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://kitaakigawa.com/"><span class="ai">🌐</span><span>公式サイト<small>kitaakigawa.com</small></span><span class="go">›</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  /* ===== 設定：あとから書き換える場所 ===== */
+  var MAP_3D_URL = 'map3d.html';        // Claude Designの3DマップURLをここに貼る
+  var PARKING_RESERVED = false; // 駐車場を予約できたら true に
+
+  /* 3Dマップ */
+  var m3 = document.getElementById('map3d');
+  if (MAP_3D_URL) { m3.href = MAP_3D_URL; document.getElementById('map3dSub').textContent = 'トイレや受付の場所をチェック'; m3.removeAttribute('target'); }
+  else { m3.classList.add('dis'); m3.removeAttribute('href'); var mf=document.querySelector('.map3d'); if(mf) mf.style.display='none'; }
+
+  /* 駐車場バナー */
+  if (PARKING_RESERVED) {
+    var a = document.getElementById('parkAlert');
+    a.removeAttribute('href'); a.style.background = '#eef8ee'; a.style.borderColor = '#bfe2bc';
+    a.innerHTML = '<span class="ai">🅿️</span><span><b style="color:var(--moss-d)">駐車場 予約済み（2台）</b><span>当日は受付で名前を伝えてください</span></span>';
+  }
+
+  /* 詳細画面 */
+  var overlay=document.getElementById('overlay'), bar=document.getElementById('bar'), scroll=document.getElementById('scroll');
+  var details=scroll.querySelectorAll('.detail'), lastBtn=null;
+  function openD(id){
+    var target=null;
+    details.forEach(function(d){ var m=d.getAttribute('data-id')===id; d.classList.toggle('hidden',!m); if(m) target=d; });
+    if(!target) return;
+    var c=target.getAttribute('data-c');
+    overlay.style.setProperty('--c',c);
+    document.getElementById('bartitle').textContent=target.getAttribute('data-title');
+    document.getElementById('barnum').textContent=target.getAttribute('data-num');
+    overlay.classList.add('open'); scroll.scrollTop=0;
+    document.getElementById('back').focus();
+    if (id==='dinfo' && MAP_3D_URL) { var f=document.getElementById('map3dFrame'); if(!f.src) f.src=MAP_3D_URL; }
+    history.pushState({d:id}, '', '#'+id);
+  }
+  function closeD(){ overlay.classList.remove('open'); if(lastBtn) lastBtn.focus(); }
+  document.querySelectorAll('[data-open]').forEach(function(b){ b.addEventListener('click',function(){ lastBtn=b; openD(b.getAttribute('data-open')); }); });
+  document.getElementById('back').addEventListener('click',function(){ history.back(); });
+  window.addEventListener('popstate',function(){ if(overlay.classList.contains('open')) closeD(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && overlay.classList.contains('open')) history.back(); });
+
+  /* 持ちものチェック（保存） */
+  var KEY='kamei-bbq-2026-check', saved={};
+  try{ saved=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ saved={}; }
+  var checks=document.querySelectorAll('.check');
+  checks.forEach(function(c){ if(saved[c.dataset.k]) c.classList.add('on'); });
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){} }
+  document.getElementById('checklist').addEventListener('click',function(e){
+    var r=e.target.closest('.check'); if(!r) return;
+    r.classList.toggle('on'); saved[r.dataset.k]=r.classList.contains('on'); save();
+  });
+  document.getElementById('resetCheck').addEventListener('click',function(){ saved={}; checks.forEach(function(c){ c.classList.remove('on'); }); save(); });
+
+  /* 行程マップ */
+  (function(){
+    if(!window.L) { document.getElementById('map').innerHTML='<p class="note" style="padding:20px;">地図を読み込めませんでした。下のボタンからGoogleマップを開いてください。</p>'; return; }
+    var map=L.map('map',{ scrollWheelZoom:false, zoomControl:true, attributionControl:true });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ maxZoom:18, attribution:'&copy; OpenStreetMap' }).addTo(map);
+    function icon(color, emoji){ return L.divIcon({ className:'', iconSize:[30,30], iconAnchor:[15,30], popupAnchor:[0,-28], html:'<div class="pin" style="background:'+color+'"><span>'+emoji+'</span></div>' }); }
+    var P={
+      okubo:[35.7034,139.6969], mizo:[35.5999,139.6106], takaido:[35.6830,139.6150], fuchu:[35.6742,139.4572],
+      hachioji:[35.6880,139.3160], akiruno:[35.7140,139.3060], itsuka:[35.7275,139.2216], hino:[35.7266,139.1496], farm:[35.7455,139.1125]
+    };
+    var common=[P.akiruno,P.itsuka,P.hino,P.farm];
+    L.polyline([P.okubo,P.takaido,P.hachioji].concat(common),{ color:'#ff8a3d', weight:5, opacity:.9, dashArray:'2 9', lineCap:'round' }).addTo(map);
+    L.polyline([P.mizo,P.fuchu,P.hachioji].concat(common),{ color:'#3d8fd6', weight:5, opacity:.9, dashArray:'2 9', lineCap:'round' }).addTo(map);
+    var pts=[
+      [P.okubo,'#ff8a3d','🚐','08:00 大久保組 出発／21:00 返却'],
+      [P.mizo,'#3d8fd6','🚙','08:40 溝の口組 ピックアップ'],
+      [[35.7240,139.2976],'#8a5228','🛒','スーパーアルプス あきる野店'],
+      [[35.7351,139.2566],'#8a5228','🛒','業務スーパー リカーキング あきる野店'],
+      [P.itsuka,'#e4553f','🤝','10:30 合流＆買い出し：いなげや ina21 五日市店'],
+      [P.hino,'#8a5228','🧊','KaaBeeya（檜原村役場の隣）'],
+      [[35.7237,139.1604],'#8a5228','🥬','山の店（檜原村）'],
+      [P.farm,'#e4553f','🍖','12:00 トラウトファーム秋川']
+    ];
+    pts.forEach(function(p){ L.marker(p[0],{icon:icon(p[1],p[2])}).addTo(map).bindPopup(p[3]); });
+    map.fitBounds(L.latLngBounds([P.okubo,P.mizo,P.farm]).pad(0.12));
+  })();
+</script>
+</body>
+</html>
