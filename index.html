@@ -40,7 +40,8 @@
   .hero .stats{ display:flex; justify-content:center; gap:7px; margin-top:14px; flex-wrap:wrap; }
   .hero .stat{ background:#fff; color:var(--river-d); font-weight:700; font-size:11.5px; padding:6px 12px; border-radius:999px; box-shadow:0 3px 0 rgba(20,90,90,.18); }
 
-  .hero .wx{ display:inline-block; margin-top:12px; font-size:12px; font-weight:900; color:#fff; text-decoration:none; padding:6px 14px; border-radius:999px; background:rgba(255,255,255,.22); border:2px solid rgba(255,255,255,.7); }
+  .hero .wxrow{ display:flex; justify-content:center; gap:8px; margin-top:12px; }
+  .hero .wx{ display:inline-block; font-size:12px; font-weight:900; color:#fff; text-decoration:none; padding:6px 14px; border-radius:999px; background:rgba(255,255,255,.22); border:2px solid rgba(255,255,255,.7); }
   .alert{ position:relative; z-index:1; display:flex; gap:12px; align-items:center; margin:18px 18px 0; padding:13px 15px; border-radius:18px;
     background:#fff3e6; border:2.5px solid #ffd2a8; text-decoration:none; color:var(--ink); }
   .alert .ai{ font-size:22px; }
@@ -137,6 +138,8 @@
   .tbl{ width:100%; border-collapse:separate; border-spacing:0; font-size:14px; background:#fff; border-radius:16px; overflow:hidden; border:2px solid var(--line); }
   .tbl td{ padding:12px 14px; border-bottom:2px dotted var(--line); }
   .tbl tr:last-child td{ border-bottom:none; }
+  .tbl.kv td:first-child{ white-space:nowrap; color:var(--sub); font-size:12.5px; width:1%; }
+  .tbl.kv td:last-child{ text-align:left; font-family:inherit; font-size:14px; white-space:normal; }
   .tbl td:last-child{ text-align:right; font-family:'Fredoka',sans-serif; font-weight:700; font-size:16px; white-space:nowrap; }
 
   .car{ background:#fff; border:2.5px solid var(--line); border-radius:20px; padding:16px; margin-bottom:14px; box-shadow:0 4px 0 var(--line); }
@@ -149,6 +152,7 @@
   .check{ display:flex; align-items:center; gap:13px; padding:14px 16px; background:#fff; border:2px solid var(--line); border-radius:16px; margin-bottom:10px; cursor:pointer; user-select:none; box-shadow:0 3px 0 var(--line); }
   .check .box{ width:26px; height:26px; border-radius:9px; border:2.5px solid #dccfbf; background:#fdf9f3; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:900; color:#fff; flex:0 0 auto; }
   .check .lbl{ font-size:15px; font-weight:700; }
+  #checklist h3{ margin:22px 0 10px; }
   .check .lbl small{ display:block; font-size:11.5px; color:var(--sub); font-weight:500; }
   .check.on{ background:#f3fbf2; border-color:#b6dfb3; }
   .check.on .box{ background:var(--moss); border-color:var(--moss); }
@@ -220,7 +224,7 @@
       <span class="stat">8:00-21:00</span>
       <span class="stat">8名＋🐶</span>
     </div>
-    <a class="wx" target="_blank" rel="noopener" href="https://www.google.com/search?q=%E6%AA%9C%E5%8E%9F%E6%9D%91+%E5%A4%A9%E6%B0%97">☀️ 檜原村の天気を見る ›</a>
+    <div class="wxrow"><a class="wx" target="_blank" rel="noopener" href="https://www.google.com/search?q=%E6%AA%9C%E5%8E%9F%E6%9D%91+%E5%A4%A9%E6%B0%97">☀️ 天気 ›</a><a class="wx" target="_blank" rel="noopener" href="https://roadway.yahoo.co.jp/">🚗 渋滞情報 ›</a></div>
     <svg class="mtn" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0 70 L50 34 L92 62 L150 18 L208 66 L262 30 L318 64 L360 40 L400 58 V120 H0z" fill="#3f8a44" opacity=".55"/>
       <path d="M0 86 L60 56 L116 82 L176 48 L240 84 L300 58 L356 82 L400 70 V120 H0z" fill="#e4553f" opacity=".75"/>
@@ -300,6 +304,7 @@
         <div class="tags"><span class="tag c">VOXY（8人乗り）</span><span class="tag">運転・貸出手続き：雄陽</span></div>
         <div class="acts">
           <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E5%AE%BF%E5%8C%BA%E7%AB%8B%E7%99%BE%E4%BA%BA%E7%94%BA%E3%81%B5%E3%82%8C%E3%81%82%E3%81%84%E5%85%AC%E5%9C%92"><span class="ai">📍</span><span>集合場所をGoogleマップで開く</span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://roadway.yahoo.co.jp/"><span class="ai">🚗</span><span>高速道路の渋滞情報<small>Yahoo!道路交通情報</small></span><span class="go">›</span></a>
         </div>
       </div>
     </div>
@@ -307,11 +312,12 @@
     <div class="detail hidden" data-id="d2" data-c="#3d8fd6" data-title="溝の口組" data-num="08:40">
       <div class="dhero"><div class="band"></div><span class="emo">🚙</span><svg class="mascot" viewBox="0 0 200 180"><use href="#roll"/></svg><div class="time">08:40</div></div>
       <div class="dbody"><h2>溝の口組 ピックアップ・出発</h2><div class="dmeta">溝の口駅</div>
-        <p>ジョーの車（レヴォーグ）で溝の口駅からみんなを乗せて出発。あいりさんの愛犬もいっしょです。10:30に<b>いなげや ina21 五日市店</b>で大久保組と合流します。</p>
-        <div class="members"><span class="mem"><i>運</i>ジョー</span><span class="mem"><i>亀</i>亀井さん</span><span class="mem"><i>赤</i>赤池</span><span class="mem"><i>あ</i>あいり</span><span class="mem"><i>🐶</i>愛犬</span></div>
+        <p>ジョーの車（レヴォーグ）で溝の口駅からみんなを乗せて出発。あいりさんの愛犬・くうちゃんもいっしょです。10:30に<b>いなげや ina21 五日市店</b>で大久保組と合流します。</p>
+        <div class="members"><span class="mem"><i>運</i>ジョー</span><span class="mem"><i>亀</i>亀井さん</span><span class="mem"><i>赤</i>赤池</span><span class="mem"><i>あ</i>あいり</span><span class="mem"><i>🐶</i>くうちゃん</span></div>
         <div class="tags"><span class="tag c">レヴォーグ（ジョー所有車）</span></div>
         <div class="acts">
           <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E6%BA%9D%E3%81%AE%E5%8F%A3%E9%A7%85"><span class="ai">📍</span><span>溝の口駅をGoogleマップで開く</span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://roadway.yahoo.co.jp/"><span class="ai">🚗</span><span>高速道路の渋滞情報<small>Yahoo!道路交通情報</small></span><span class="go">›</span></a>
         </div>
       </div>
     </div>
@@ -337,7 +343,7 @@
     <div class="detail hidden" data-id="d4" data-c="var(--river)" data-title="BBQスタート" data-num="12:00">
       <div class="dhero"><div class="band"></div><span class="emo">🍖</span><svg class="mascot" viewBox="0 0 200 190"><use href="#grill"/><use href="#roll" transform="translate(0,-8)"/></svg><div class="time">12:00</div></div>
       <div class="dbody"><h2>トラウトファーム秋川 到着・BBQ開始</h2><div class="dmeta">東京都西多摩郡檜原村樋里4426・営業 8:00〜17:00</div>
-        <p>到着したら受付へ。BBQは川原のスペースで。コンロなどの道具は現地でレンタルします。釣り堀でのヤマメ・ニジマス釣りや川遊びも楽しめます。</p>
+        <p>到着したら受付で管理費・駐車場代を現金で支払い、BBQセットと炭をレンタル。BBQは川原のスペースで（直火は不可）。釣り堀でのヤマメ・ニジマス釣りや川遊びも楽しめます。</p>
         <div class="tags"><span class="tag warn">支払いは現金のみ</span><span class="tag c">BBQは川原で</span><span class="tag">道具は現地レンタル</span></div>
         <div class="acts">
           <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=%E3%83%88%E3%83%A9%E3%82%A6%E3%83%88%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E7%A7%8B%E5%B7%9D&travelmode=driving"><span class="ai">🧭</span><span>ここへナビ開始</span><span class="go">›</span></a>
@@ -349,9 +355,10 @@
     <div class="detail hidden" data-id="d5" data-c="var(--momiji)" data-title="撤収" data-num="16:00">
       <div class="dhero"><div class="band"></div><span class="emo">🍁</span><svg class="mascot" viewBox="0 0 200 180"><use href="#roll"/></svg><div class="time">16:00</div></div>
       <div class="dbody"><h2>撤収・現地出発</h2><div class="dmeta">16:00〜16:30・営業終了は17:00</div>
-        <p>閉場時間に合わせて、みんなで片付け。レンタル品の返却と、ゴミの扱いは受付で確認を。10月の山あいは夕方から一気に冷えるので、上着を出しておくと安心です。</p>
+        <p>閉場時間に合わせて、みんなで片付け。レンタル品を返却し、<b>ゴミはすべて持ち帰り</b>（施設では処分できません）。10月の山あいは夕方から一気に冷えるので、上着を出しておくと安心です。</p>
         <p style="margin-top:12px;">3連休の最終日なので、帰りは中央道上り（八王子→高井戸）が渋滞する可能性があります。返却時間に遅れそうなときは、雄陽がレンタカー店に連絡します。</p>
-        <div class="tags"><span class="tag warn">帰りは渋滞に注意</span><span class="tag warn">ゴミのルールは現地で確認</span><span class="tag c">レンタル品の返却</span></div>
+        <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://roadway.yahoo.co.jp/"><span class="ai">🚗</span><span>高速道路の渋滞情報<small>Yahoo!道路交通情報</small></span><span class="go">›</span></a></div>
+        <div class="tags"><span class="tag warn">帰りは渋滞に注意</span><span class="tag warn">ゴミは持ち帰り</span><span class="tag c">レンタル品の返却</span></div>
       </div>
     </div>
 
@@ -373,7 +380,7 @@
         </div>
         <div class="car" style="--cc:#3d8fd6;">
           <div class="ch"><span class="ce">🚙</span><div><div class="cn">溝の口組｜レヴォーグ</div><div class="cm">ジョー所有車／8:40 溝の口駅<br>10:30 いなげや ina21 五日市店で合流</div></div></div>
-          <div class="members"><span class="mem"><i>運</i>ジョー</span><span class="mem"><i>亀</i>亀井さん</span><span class="mem"><i>赤</i>赤池</span><span class="mem"><i>あ</i>あいり</span><span class="mem"><i>🐶</i>愛犬</span></div>
+          <div class="members"><span class="mem"><i>運</i>ジョー</span><span class="mem"><i>亀</i>亀井さん</span><span class="mem"><i>赤</i>赤池</span><span class="mem"><i>あ</i>あいり</span><span class="mem"><i>🐶</i>くうちゃん</span></div>
         </div>
         <h3>駐車場代（トラウトファーム秋川）</h3>
         <table class="tbl"><tr><td>普通車</td><td>¥1,200</td></tr><tr><td>二輪車</td><td>¥400</td></tr></table>
@@ -418,7 +425,7 @@
           <div class="big">約6,000<small>円</small></div>
           <div class="s">1人あたり（概算）</div>
         </div>
-        <div class="extra"><span>BBQ道具のレンタル代</span><b>別途・現地精算</b></div>
+        <div class="extra"><span>BBQ道具のレンタル代<br><small style="color:var(--sub);">参考：8人で約10,300円（1人約1,300円）</small></span><b>別途・現地精算</b></div>
         <h3>現地の利用料金</h3>
         <table class="tbl">
           <tr><td>大人（高校生以上）</td><td>¥500／人</td></tr>
@@ -431,14 +438,33 @@
     <!-- 持ちもの -->
     <div class="detail hidden" data-id="dcheck" data-c="var(--moss-d)" data-title="持ちものリスト" data-num="CHECK">
       <div class="dbody" style="padding-top:22px;" id="checklist">
-        <p class="note" style="margin:0 0 16px;">タップでチェック。閉じても保存されます ✓</p>
+        <p class="note" style="margin:0 0 6px;">タップでチェック。閉じても保存されます ✓</p>
+        <h3>🍖 BBQで必要なもの<span style="font-size:11px;color:var(--sub);font-family:'Zen Maru Gothic';"> ＊施設では売っていません</span></h3>
+        <p class="note" style="margin:0 0 12px;">コンロ・網・トング・包丁などはレンタルセットに入っています。それ以外をみんなで分担して持っていこう（誰が持つかはLINEで）。</p>
+        <div class="check" data-k="season"><div class="box"></div><span class="lbl">調味料<small>塩こしょう・焼肉のたれ・焼きそばソース・油</small></span></div>
+        <div class="check" data-k="dish"><div class="box"></div><span class="lbl">紙皿・紙コップ・割り箸<small>8人分＋予備</small></span></div>
+        <div class="check" data-k="fire"><div class="box"></div><span class="lbl">着火剤・ライター（チャッカマン）</span></div>
+        <div class="check" data-k="gunte"><div class="box"></div><span class="lbl">軍手<small>炭の扱い・片付けに</small></span></div>
+        <div class="check" data-k="foil"><div class="box"></div><span class="lbl">アルミホイル<small>ネオ黒糖ロールの焦げ防止にも🍞</small></span></div>
+        <div class="check" data-k="paper"><div class="box"></div><span class="lbl">キッチンペーパー・ウェットティッシュ</span></div>
+        <div class="check" data-k="cooler"><div class="box"></div><span class="lbl">クーラーボックス・保冷剤<small>食材と飲み物用</small></span></div>
+        <div class="check" data-k="trash"><div class="box"></div><span class="lbl">ゴミ袋（多めに）<small>ゴミはすべて持ち帰り</small></span></div>
+        <h3>🎾 みんなで遊ぶもの</h3>
+        <div class="check" data-k="frisbee"><div class="box"></div><span class="lbl">フリスビー<small>河原や広場で8人でパス回し</small></span></div>
+        <div class="check" data-k="badminton"><div class="box"></div><span class="lbl">バドミントン</span></div>
+        <div class="check" data-k="ball"><div class="box"></div><span class="lbl">ビーチボール<small>川遊びにも</small></span></div>
+        <div class="check" data-k="cards"><div class="box"></div><span class="lbl">トランプ・UNO<small>食後のまったりタイムに</small></span></div>
+        <div class="check" data-k="fishing"><div class="box"></div><span class="lbl">（釣りは現地で貸竿あり）<small>貸竿¥300・エサ¥300</small></span></div>
+        <h3>👕 各自の持ちもの</h3>
         <div class="check" data-k="cash"><div class="box"></div><span class="lbl">現金（多め）<small>現地は現金のみ＋精算用</small></span></div>
         <div class="check" data-k="shoes"><div class="box"></div><span class="lbl">濡れてもいい靴<small>川遊び・釣りをする人</small></span></div>
         <div class="check" data-k="clothes"><div class="box"></div><span class="lbl">着替え</span></div>
         <div class="check" data-k="towel"><div class="box"></div><span class="lbl">タオル</span></div>
         <div class="check" data-k="jacket"><div class="box"></div><span class="lbl">上着・防寒着<small>山あいの夕方は冷えます</small></span></div>
-        <div class="check" data-k="trash"><div class="box"></div><span class="lbl">ゴミ袋</span></div>
         <div class="check" data-k="phone"><div class="box"></div><span class="lbl">スマホ＆モバイルバッテリー</span></div>
+        <h3>🐶 くうちゃん用（あいりさん）</h3>
+        <div class="check" data-k="dog"><div class="box"></div><span class="lbl">リード・水・おやつ・トイレ用品</span></div>
+        <p class="note">※スピーカーは持ち込みNGです。</p>
         <button class="reset" id="resetCheck">チェックをすべて外す</button>
       </div>
     </div>
@@ -446,14 +472,16 @@
     <!-- 注意事項 -->
     <div class="detail hidden" data-id="dnote" data-c="var(--momiji-d)" data-title="注意事項" data-num="NOTE">
       <div class="dbody" style="padding-top:14px;">
-        <div class="nrow hot"><span class="ni">🅿️</span><div><b>駐車場は要予約</b><span>駐車場は約10台。祝日は満車になりやすいため、電話（042-598-0204）で予約を。</span></div></div>
+        <div class="nrow hot"><span class="ni">🅿️</span><div><b>駐車場は要予約</b><span>駐車場は普通車で約12台分。祝日は満車になりやすいため、電話（042-598-0204）で予約を。</span></div></div>
         <div class="nrow hot"><span class="ni">💴</span><div><b>現金を用意</b><span>現地決済は現金のみ。立替え分の精算用にも多めに準備を。</span></div></div>
-        <div class="nrow"><span class="ni">🚗</span><div><b>帰りの渋滞</b><span>3連休最終日のため、夕方の中央道上りは混みやすいです。返却に遅れそうなら雄陽がレンタカー店に連絡。</span></div></div>
+        <div class="nrow"><span class="ni">🚗</span><div><b>帰りの渋滞</b><span>3連休最終日のため、夕方の中央道上りは混みやすいです。返却に遅れそうなら雄陽がレンタカー店に連絡。<a href="https://roadway.yahoo.co.jp/" target="_blank" rel="noopener" style="color:var(--river-d);font-weight:700;">渋滞情報を見る ›</a></span></div></div>
         <div class="nrow"><span class="ni">👟</span><div><b>服装・シューズ</b><span>川遊びや釣りをする人は、濡れてもいい靴と着替えを持参。</span></div></div>
-        <div class="nrow"><span class="ni">☔</span><div><b>天候</b><span>雨のときはレンタルタープが使えます。<a href="https://www.google.com/search?q=%E6%AA%9C%E5%8E%9F%E6%9D%91+%E5%A4%A9%E6%B0%97" target="_blank" rel="noopener" style="color:var(--river-d);font-weight:700;">檜原村の天気予報 ›</a></span></div></div>
+        <div class="nrow hot"><span class="ni">🗑️</span><div><b>ゴミはすべて持ち帰り</b><span>施設ではゴミの処分・引き取りができません。ゴミ袋を多めに。</span></div></div>
+        <div class="nrow"><span class="ni">🔇</span><div><b>スピーカーは持ち込みNG</b><span>音楽を流すスピーカーは遠慮してほしいとのこと。</span></div></div>
+        <div class="nrow"><span class="ni">☔</span><div><b>天候</b><span>雨天用の屋根付き施設はありません。雨のときはレンタルタープ（約8名・2.5m四方、¥2,200）を。<a href="https://www.google.com/search?q=%E6%AA%9C%E5%8E%9F%E6%9D%91+%E5%A4%A9%E6%B0%97" target="_blank" rel="noopener" style="color:var(--river-d);font-weight:700;">檜原村の天気予報 ›</a></span></div></div>
         <div class="nrow"><span class="ni">🐒</span><div><b>野生動物に注意</b><span>鳥やサル、熊などの目撃情報があります（村内放送で案内）。食べ物の出しっぱなしに気をつけて。</span></div></div>
-        <div class="nrow"><span class="ni">🚬</span><div><b>喫煙</b><span>喫煙スペースあり。</span></div></div>
-        <div class="nrow"><span class="ni">🐶</span><div><b>ペット</b><span>同伴OK。あいりさんの愛犬が参加予定です。ペットの料金は、駐車場の予約電話のときに確認を。</span></div></div>
+        <div class="nrow"><span class="ni">🚬</span><div><b>喫煙</b><span>喫煙可。周りのお客さんへの配慮を。</span></div></div>
+        <div class="nrow"><span class="ni">🐶</span><div><b>ペット</b><span>同伴OK（周りのお客さんへの配慮を）。あいりさんの愛犬・くうちゃんが参加予定です。ペットの料金は、予約電話のときに確認を。</span></div></div>
       </div>
     </div>
 
@@ -461,21 +489,73 @@
     <div class="detail hidden" data-id="dinfo" data-c="#3d8fd6" data-title="施設情報" data-num="INFO">
       <div class="dbody" style="padding-top:24px;">
         <h2>トラウトファーム秋川</h2>
-        <div class="dmeta">東京都西多摩郡檜原村樋里4426</div>
-        <table class="tbl">
-          <tr><td>営業時間</td><td>8:00〜17:00</td></tr>
-          <tr><td>電話</td><td>042-598-0204</td></tr>
-          <tr><td>駐車場</td><td>約10台</td></tr>
+        <div class="dmeta">秋川渓谷の源流、北秋川沿いの日帰りBBQ場。釣り堀・川遊びも。</div>
+        <table class="tbl kv">
+          <tr><td>住所</td><td>〒190-0205<br>東京都西多摩郡檜原村樋里4426</td></tr>
+          <tr><td>電話</td><td><a href="tel:0425980204">042-598-0204</a></td></tr>
+          <tr><td>営業時間</td><td>8:00〜17:00（通年・不定休）</td></tr>
+          <tr><td>ホームページ</td><td><a href="https://kitaakigawa.jp/" target="_blank" rel="noopener">kitaakigawa.jp</a></td></tr>
+          <tr><td>予約</td><td>電話またはメール</td></tr>
+          <tr><td>支払い</td><td>現金のみ</td></tr>
+          <tr><td>駐車場</td><td>普通車 約12台</td></tr>
+          <tr><td>アクセス</td><td>武蔵五日市駅から車で約30分</td></tr>
         </table>
+        <div class="acts">
+          <a class="act" href="tel:0425980204"><span class="ai">📞</span><span>電話する<small>駐車場の予約・当日の連絡に</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A9%E3%82%A6%E3%83%88%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E7%A7%8B%E5%B7%9D"><span class="ai">🗺️</span><span>Googleマップで開く</span><span class="go">›</span></a>
+        </div>
+
+        <h3>🍖 バーベキュー施設</h3>
+        <div class="nrow"><span class="ni">🏞️</span><div><b>川原のスペースでBBQ</b><span>秋川渓谷の木々に囲まれ、木陰も多い。最大約8グループ・50名ほどのアットホームな規模。直火は不可。</span></div></div>
+        <div class="nrow"><span class="ni">🚰</span><div><b>設備</b><span>水場（炊事場）・水洗トイレあり。</span></div></div>
+        <div class="nrow"><span class="ni">🥩</span><div><b>持ち込み無料</b><span>食材・BBQ用具の持ち込みは無料。<br>ただし<b>肉・野菜・調味料・食器の販売はなし</b>。必ず買って持っていこう。</span></div></div>
+        <div class="nrow"><span class="ni">🗑️</span><div><b>ゴミは持ち帰り</b><span>施設では処分・引き取りができません。</span></div></div>
+        <div class="nrow"><span class="ni">⛺</span><div><b>雨天施設なし</b><span>雨のときはレンタルタープ（約8名・2.5m四方）を。</span></div></div>
+        <div class="nrow"><span class="ni">🔇</span><div><b>スピーカー不可／喫煙・ペットは配慮して可</b><span>周りのお客さんへの気配りを。</span></div></div>
+
+        <h3>💴 料金（公式サイトより）</h3>
+        <table class="tbl">
+          <tr><td>管理費 大人（高校生以上）</td><td>¥500</td></tr>
+          <tr><td>管理費 子ども（3歳〜中学生）</td><td>¥250</td></tr>
+          <tr><td>駐車場 普通車／二輪車</td><td>¥1,200／¥400</td></tr>
+        </table>
+        <h3>🔥 BBQレンタル・燃料</h3>
+        <div class="extra" style="margin:0 0 10px;display:block;"><b style="color:var(--river-d);">BBQセット ¥3,500</b><br><span style="font-size:12.5px;color:var(--sub);">コンロ・火はさみ・アルミプレート・焼き網・トング・包丁・まな板・ピーラー・ボウル・ザル・キッチンばさみ<br>※炭・薪・イス・テーブルは別料金</span></div>
+        <table class="tbl">
+          <tr><td>炭（3kg）</td><td>¥1,200</td></tr>
+          <tr><td>薪（1束）</td><td>¥800</td></tr>
+          <tr><td>テーブル</td><td>¥800</td></tr>
+          <tr><td>イス</td><td>¥350</td></tr>
+          <tr><td>タープ</td><td>¥2,200</td></tr>
+          <tr><td>鍋（おたま付）</td><td>¥1,000</td></tr>
+          <tr><td>焼き網（単品）</td><td>¥600</td></tr>
+        </table>
+        <div class="btot" style="margin-top:14px;padding:14px;">
+          <div class="l">8人での目安：セット＋炭2袋＋テーブル2台＋イス8脚</div>
+          <div class="big" style="font-size:32px;">約10,300<small>円</small></div>
+          <div class="s">1人あたり 約1,300円（別途・現地精算の参考）</div>
+        </div>
+
+        <h3>🎣 釣り堀・つかみどり</h3>
+        <table class="tbl">
+          <tr><td>ヤマメ（1尾）</td><td>¥450</td></tr>
+          <tr><td>ニジマス（1尾）</td><td>¥400</td></tr>
+          <tr><td>貸竿／エサ</td><td>¥300／¥300</td></tr>
+          <tr><td>魚焼き代（2尾から・1尾）</td><td>¥250</td></tr>
+        </table>
+        <p class="note">※つかみどりは4月下旬〜10月中旬ごろまで。当日（10/12）実施しているかは要確認。</p>
+
         <h3>🏔️ 場内3Dマップ</h3>
         <div class="map3d"><iframe id="map3dFrame" title="トラウトファーム秋川 場内3Dマップ"></iframe></div>
         <p class="note" style="margin-top:8px;">ドラッグで回転・ピンチで拡大。アイコンをタップすると説明が出ます。</p>
         <div class="acts">
-          <a class="act" href="tel:0425980204"><span class="ai">📞</span><span>電話する<small>駐車場の予約・当日の連絡に</small></span><span class="go">›</span></a>
-          <a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%E3%83%88%E3%83%A9%E3%82%A6%E3%83%88%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E7%A7%8B%E5%B7%9D"><span class="ai">🗺️</span><span>Googleマップで開く</span><span class="go">›</span></a>
           <a class="act" id="map3d" target="_blank" rel="noopener" href="#"><span class="ai">🏔️</span><span>3Dマップを全画面で開く<small id="map3dSub">準備中</small></span><span class="go">›</span></a>
-          <a class="act" target="_blank" rel="noopener" href="https://kitaakigawa.com/"><span class="ai">🌐</span><span>公式サイト<small>kitaakigawa.com</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://kitaakigawa.jp/"><span class="ai">🌐</span><span>公式ホームページ<small>kitaakigawa.jp</small></span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://kitaakigawa.jp/?page_id=9"><span class="ai">💴</span><span>料金ページ（公式）</span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://kitaakigawa.jp/?page_id=15"><span class="ai">❓</span><span>よくある質問（公式）</span><span class="go">›</span></a>
+          <a class="act" target="_blank" rel="noopener" href="https://kitaakigawa.jp/?page_id=2499"><span class="ai">📝</span><span>予約ページ（公式）</span><span class="go">›</span></a>
         </div>
+        <p class="note">※料金は公式サイトの掲載内容です。変更の可能性があるので、予約時に確認を。</p>
       </div>
     </div>
 
